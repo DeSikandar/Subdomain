@@ -1,0 +1,35 @@
+[91m
+                 ____        _     _ _     _   _____
+                / ___| _   _| |__ | (_)___| |_|___ / _ __
+                \___ \| | | | '_ \| | / __| __| |_ \| '__|
+                 ___) | |_| | |_) | | \__ \ |_ ___) | |
+                |____/ \__,_|_.__/|_|_|___/\__|____/|_|[0m[93m
+
+                # Coded By Ahmed Aboul-Ela - @aboul3la
+    
+Usage: python /home/sikandarpatel/.local/share/virtualenvs/Pratik-GCqO41yZ/bin/sublist3r [Options] use -h for help
+[91mError: the following arguments are required: -d/--domain[0m
+[91m
+                 ____        _     _ _     _   _____
+                / ___| _   _| |__ | (_)___| |_|___ / _ __
+                \___ \| | | | '_ \| | / __| __| |_ \| '__|
+                 ___) | |_| | |_) | | \__ \ |_ ___) | |
+                |____/ \__,_|_.__/|_|_|___/\__|____/|_|[0m[93m
+
+                # Coded By Ahmed Aboul-Ela - @aboul3la
+    
+[94m[-] Enumerating subdomains now for google.com[0m
+[92m[-] Searching now in Baidu..[0m
+[92m[-] Searching now in Yahoo..[0m
+[92m[-] Searching now in Google..[0m
+[92m[-] Searching now in Bing..[0m
+[92m[-] Searching now in Ask..[0m
+[92m[-] Searching now in Netcraft..[0m
+[92m[-] Searching now in DNSdumpster..[0m
+[92m[-] Searching now in Virustotal..[0m
+[92m[-] Searching now in ThreatCrowd..[0m
+[92m[-] Searching now in SSL Certificates..[0m
+[92m[-] Searching now in PassiveDNS..[0m
+HTTPSConnectionPool(host='searchdns.netcraft.com', port=443): Max retries exceeded with url: /?restriction=site+ends+with&host=example.com (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7fad5af38fa0>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution'))
+HTTPSConnectionPool(host='dnsdumpster.com', port=443): Max retries exceeded with url: / (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7fad5af38e50>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution'))
+HTTPSConnectionPool(host='www.virustotal.com', port=443): Max retries exceeded with url: /ui/domains/google.com/subdomains (Caused by NewConnectionError('<urllib3.connection.VerifiedHTTPSConnection object at 0x7fad5af38fd0>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution'))

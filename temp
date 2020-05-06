@@ -1,0 +1,7 @@
+for s in subdomains:
+     try:
+             r=requests.get("http://"+s)
+             print(r)
+     except:
+             print("eeror")
+ 

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<title></title>
+		<link href="{{url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet" />
+		<script src="{{url_for('static',filename='js/jquery-1.10.2.min.js')}}"></script>
+		<script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>
+		<script src="{{url_for('static',filename='js/jquery.form.js')}}"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<style>
+		#targetLayer{
+			max-height: 300px;
+    		overflow-y: scroll;
+		}
+		table{
+    table-layout: fixed;
+}
+td{
+    word-wrap:break-word
+}
+		
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<br />
+			<h3 align="center">Subster</h3>
+			<br />
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>Pratik</b></div>
+				<div class="panel-body">
+					<form id="uploadImage" action="/sudomain" method="POST" enctype="multipart/form-data">
+					<div class="form-group">
+							<label >Domain</label>
+							<input type="text" class="form-control" id="uploadFile" name="domain" placeholder="enter domain here..">
+						</div>
+
+					
+						<div class="form-group">
+							<input type="submit" id="uploadSubmit" value="Submit" class="btn btn-info" />
+						</div>
+						<hr>
+						<div class="mt-5" style="margin-top: 25px; display: none;" id="d"><a  id="downloadLink" class="btn btn-success"><i class="fa fa-download"></i>Save</a></div>
+						<hr>
+						<div id="targetLayer" style="display: anone;">
+						<table class="table table-responsive" >
+							<thead>
+							<tr><td>Target</td>
+								<td>Hostname</td>
+								<td>Alias</td>
+								<td>Ipaddress</td>
+								<td>Title</td>
+								<td>Status</td>	
+								<td>Server</td>
+							</tr>
+						</thead>
+							<tbody id="ta">
+
+							</tbody>
+
+						</table>
+						</div>
+					</form>
+					<div id="loader-icon" style="display:none;" class="align-content-center" align="center"><img src="{{url_for('static',filename='img/loader.gif')}}" /></div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+
+<script>
+$(document).ready(function(){
+
+
+	
+	
+	$('#uploadImage').submit(function(event){
+			// $('#targetLayer').html("");
+
+		if($('#uploadFile').val())
+		{
+			event.preventDefault();
+			$('#loader-icon').show();
+
+			// $('#targetLayer').hide();
+			// $.post( "/port", { domain: $('#uploadFile').val() })
+			// 	.done(function( data ) {
+			// 		data=jQuery.parseJSON(data);
+			// 		console.log(data['tcp']);
+			// 		$('#targetLayer').append("<br>");
+			// 		$('#targetLayer').append("Open Ports\n\r");
+			// 		$('#targetLayer').append("<br>");
+			// 		$('#targetLayer').append("===========================================================\n\r");
+			// 		$('#targetLayer').append("<br>");
+			// 		$.each(data['tcp'], function( index, value ) {
+			// 			console.log(index)
+			// 			console.log(value)
+			// 			// $('#targetLayer').html("");
+			// 			// $('#targetLayer').show();
+			// 			// $('#d').show();
+						
+						
+
+			// 			$('#targetLayer').append(index+" \t  "+value['name']+"\t  "+value['product']+"\t  "+value['state']);
+			// 			$('#targetLayer').append('<br>');
+			// 			// alert( index + ": " + value );
+			// 		});
+			// 		$('#loader-icon').hide();
+			// 	});
+			
+			$(this).ajaxSubmit({
+				
+				
+				success:function(data){
+					$('#loader-icon').hide();
+					$('#d').show();
+					console.log(data)
+					data=jQuery.parseJSON(data);
+					// console.log(data)
+					// $('#targetLayer').append("Subdomain\n\r");
+					// $('#targetLayer').append("<br>");
+					
+					// $('#targetLayer').append("===========================================================\n\r");
+					// $('#targetLayer').append("<br>");
+					
+					$.each(data, function( index, value ) {
+						// console.log(value)
+						// $('#targetLayer').html("");
+						// $('#targetLayer').show();
+						// $('#d').show();
+						$.post("/detail",{domain:value})
+						.done((datas)=>{
+
+							// console.log(datas)
+							pdat=jQuery.parseJSON(datas);
+							console.log(pdat);
+							
+							$('#ta').append(`<tr><td>${pdat.target}</td><td>${pdat.hostname}</td><td>${pdat.alias}</td><td>${pdat.ipaddress[0]}</td><td>${pdat.title}</td><td>${pdat.status}</td><td>${pdat.server}</td></tr>`);
+							
+							// Object.keys(pdat).forEach(function(key){
+							// 	console.log(pdat);
+							// });
+							// $.each(pdat,function(v){
+							// 	// console.log(pdat)
+							// // console.log(pdata.v);
+
+							// // $('#ta').append(`
+							// // <tr>
+							// // 	// <td>${v.target}</td>
+								
+							// // </tr>
+							// // `);
+							// 	// $('#targetLayer').append();
+							// 	// $('#targetLayer').append('<br>');
+							// });
+							
+						
+						})
+						
+						
+						// alert( index + ": " + value );
+					});
+					
+					
+					// $('#targetLayer').show();
+				},
+				resetForm: true
+			
+			});
+		}
+		return false;
+	});
+});
+
+
+
+function downloadInnerHtml(filename, elId, mimeType) {
+    var elHtml = document.getElementById(elId).innerHTML;
+	var res = elHtml.replace(/<br\s*\/?>/gi, '\r\n');
+    var link = document.createElement('a');
+    mimeType = mimeType || 'text/plain';
+
+    link.setAttribute('download', filename);
+    link.setAttribute('href', 'data:' + mimeType + ';charset=utf-8,' + encodeURIComponent(res));
+    link.click(); 
+}
+
+var fileName =  'sudomain.txt'; // You can use the .txt extension if you want
+
+$('#downloadLink').click(function(){
+	var retContent = [];
+  var retString = '';
+  $('tbody tr').each(function (idx, elem)
+  {
+    var elemText = [];
+    $(elem).children('td').each(function (childIdx, childElem)
+    {
+      elemText.push($(childElem).text());
+    });
+    retContent.push(`(${elemText.join(',')})`);
+  });
+  retString = retContent.join(',\r\n');
+	var file = new Blob([retString], {type: 'text/plain'});
+  var btn = $('#downloadLink');
+  btn.attr("href", URL.createObjectURL(file));
+  btn.prop("download", "subdomain.txt");
+    // downloadInnerHtml(fileName, 'targetLayer','text/html');
+});
+
+</script>
